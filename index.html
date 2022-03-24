@@ -187,6 +187,373 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/22/AQS%E6%BA%90%E7%A0%81-%E9%87%8D%E8%A6%81%E7%9A%84%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/whole.png">
+      <meta itemprop="name" content="小鲸鱼">
+      <meta itemprop="description" content="凡事以理想为因,实行为过">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Whole">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/22/AQS%E6%BA%90%E7%A0%81-%E9%87%8D%E8%A6%81%E7%9A%84%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">AQS源码-重要的成员方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-22 18:04:15" itemprop="dateCreated datePublished" datetime="2022-03-22T18:04:15+08:00">2022-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-24 17:14:51" itemprop="dateModified" datetime="2022-03-24T17:14:51+08:00">2022-03-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JUC/" itemprop="url" rel="index"><span itemprop="name">JUC</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>##从acquire方法(线程竞争获取资源)<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">   //* Attempts to acquire in exclusive mode.（tryAcquire方法尝试以独占方式获取锁)</span><br><span class="line">//* Creates and enqueues node for current thread and given mode(addWaiter方法将当前线程封装成Node结点取获取锁)</span><br><span class="line">// acquireQueued(让当前线程以自旋的方式不断的去获取锁资源,该方法还包括抢占锁资源失败后挂起当前线程、线程唤醒后相关的逻辑)</span><br><span class="line">// selfInterrupt()中断当前线程</span><br><span class="line"> public final void acquire(int arg) &#123;</span><br><span class="line">       if (!tryAcquire(arg) &amp;&amp;</span><br><span class="line">           acquireQueued(addWaiter(Node.EXCLUSIVE), arg))</span><br><span class="line">           selfInterrupt();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>##tryAcquire方法</p>
+<pre><code>    //Reentrantlock中FairSync公平获锁（位于ReentrantLock类的静态内部类Sync中）
+ // 返回true -&gt; 尝试获取锁成功 | 返回false -&gt; 尝试获取锁失败
+ protected final boolean tryAcquire(int acquires) &#123;
+        //获取当前线程
+        final Thread current = Thread.currentThread();
+        //返回同步状态当前值
+        int c = getState();
+        //当c==0时说明处于无锁状态
+        //hasQueuedPredecessors()判断FIFO队列中是否有排队的线程
+        //返回true ---&gt; 说明当前队列中有排队的线程,当前线程需要入队等待(!tryAcquire(arg)&amp;&amp;acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
+        //返回false ---&gt;说明当前队列中没有排队的线程,当前线程可以尝试去获取锁资源
+        if (c == 0) &#123;
+            if (!hasQueuedPredecessors() &amp;&amp;
+              //compareAndSetState(0, acquires)以CAS原子性的方式去修改Status的值
+            // 返回true ---&gt; 说明status更新成功，成功抢占到了锁资源
+             // 返回false---&gt; 说明status更新失败，有多个线程存在竞争锁资源,当前线程竞争失败
+                compareAndSetState(0, acquires)) &#123;
+            //当队列中既没有排队线程并且当前线程抢占到了锁资源，那么设置当前线程拥有独占访问的权限
+                setExclusiveOwnerThread(current);
+            //当前线程获取锁资源成功
+                return true;
+            &#125;
+        &#125;
+        // * Returns the thread last set by &#123;@code setExclusiveOwnerThread&#125;,or &#123;@code null&#125; if never set
+        // 进入当前if语句的前提c！=0,说明锁资源被抢占,因为可重入锁的原因,已经获取锁的线程可以再次进入。
+        else if (current == getExclusiveOwnerThread()) &#123;
+            //将获取锁资源的次数加上acquires值
+            int nextc = c + acquires;
+            //越界判断
+            if (nextc &lt; 0)
+                throw new Error(&quot;Maximum lock count exceeded&quot;);
+            //更新同步状态的值(state = newState  newState为形参值，当前就是nextc)
+            setState(nextc);
+            //获取锁资源成功
+            return true;
+        &#125;
+        //1:CAS加锁失败
+        //2:Staus!=0&amp;&amp;当前线程不是占有锁资源的线程
+        return false;
+    &#125;
+</code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/22/AQS%E6%BA%90%E7%A0%81-%E9%87%8D%E8%A6%81%E7%9A%84%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/22/AQS%E6%A6%82%E8%BF%B0,%E6%9E%B6%E6%9E%84-22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/whole.png">
+      <meta itemprop="name" content="小鲸鱼">
+      <meta itemprop="description" content="凡事以理想为因,实行为过">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Whole">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/22/AQS%E6%A6%82%E8%BF%B0,%E6%9E%B6%E6%9E%84-22/" class="post-title-link" itemprop="url">AQS概述、体系架构、属性分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-22 18:04:15" itemprop="dateCreated datePublished" datetime="2022-03-22T18:04:15+08:00">2022-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-23 21:36:34" itemprop="dateModified" datetime="2022-03-23T21:36:34+08:00">2022-03-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JUC/" itemprop="url" rel="index"><span itemprop="name">JUC</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>##AQS的概述<br>AQS的全称是AbstractQueuedSynchronizer(抽象队列同步器),它是其他同步器组件的基础框架并且是整个JUC体系的基石,AQS是基于CLH（Craig、Landin 和 Hagersten）锁定队列的变体实现FIFO(双向队列),每一个抢占资源的线程被封装成了Node结点来实现对资源的分配,内部维护了一个同步状态变量status(private volatile int state),通过CAS的方式进行原子更新状态变量Status实现加锁解锁操作</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/22/AQS%E6%A6%82%E8%BF%B0,%E6%9E%B6%E6%9E%84-22/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/22/leetcode-2022-3-23/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/whole.png">
+      <meta itemprop="name" content="小鲸鱼">
+      <meta itemprop="description" content="凡事以理想为因,实行为过">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Whole">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/22/leetcode-2022-3-23/" class="post-title-link" itemprop="url">leetcode_2022/3/23</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-22 18:04:15" itemprop="dateCreated datePublished" datetime="2022-03-22T18:04:15+08:00">2022-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-23 23:28:22" itemprop="dateModified" datetime="2022-03-23T23:28:22+08:00">2022-03-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <pre><code>剑指 Offer 34. 二叉树中和为某一值的路径
+class Solution &#123;
+List&lt;List&lt;Integer&gt;&gt; list_1 = new LinkedList&lt;&gt;();
+LinkedList&lt;Integer&gt; list_2 = new LinkedList&lt;&gt;();
+public List&lt;List&lt;Integer&gt;&gt; pathSum(TreeNode root, int target) &#123;
+   dfs(root,target);
+   return list_1;
+&#125;
+public void dfs(TreeNode root,int target)&#123;
+    if(root==null)return;
+    target-=root.val;
+   list_2.add(root.val);
+   if(root.left==null&amp;&amp;root.right==null&amp;&amp;target==0) &#123;
+     list_1.add(new LinkedList&lt;&gt;(list_2));//不能提前return会导致队列二无法回溯导致结果不对
+   &#125;
+   dfs(root.left,target);
+   dfs(root.right,target);
+   // target-=root.val;为什么不需要再加上root.val，因为Java是值传递,是将实参复制一份传给函数,在函数里修改并不影响实参,所以加不加都没影响
+   list_2.removeLast();
+   return;
+&#125;
+&#125;
+</code></pre>
+<p>##剑指 Offer 29. 顺时针打印矩阵</p>
+<pre><code>class Solution &#123;
+public int[] spiralOrder(int[][] matrix) &#123;
+   if(matrix.length==0)return new int[0];
+   int l = 0,r = matrix[0].length-1,b = matrix.length-1,t = 0 ,x =0  ;
+    int res[] = new int[(b+1)*(r+1)];
+    while(true) &#123;
+        for(int i = l; i &lt;= r; i++) res[x++] = matrix[t][i]; // 从左往右遍历
+        if(++t &gt; b) break;//边界条件收缩,行数向下收缩t++,如果大于b,结束循环返回
+        for(int i = t; i &lt;= b; i++) res[x++] = matrix[i][r]; // 从上往下遍历
+        if(l &gt; --r) break;//边界条件收缩,列数向左搜索
+        for(int i = r; i &gt;= l; i--) res[x++] = matrix[b][i]; // 从右往左
+        if(t &gt; --b) break;//边界条件收缩,行数向上收缩
+        for(int i = b; i &gt;= t; i--) res[x++] = matrix[i][l]; // 从下往上.
+        if(++l &gt; r) break;//边界条件收缩,列数向右收缩
+    &#125;
+    return res;
+&#125;
+&#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+	
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/22/leetcode-2022-3-22/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -284,201 +651,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/22/AQS%E6%BA%90%E7%A0%81-%E9%87%8D%E8%A6%81%E7%9A%84%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/whole.png">
-      <meta itemprop="name" content="小鲸鱼">
-      <meta itemprop="description" content="凡事以理想为因,实行为过">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Whole">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/22/AQS%E6%BA%90%E7%A0%81-%E9%87%8D%E8%A6%81%E7%9A%84%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">AQS源码-重要的成员方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-22 18:04:15" itemprop="dateCreated datePublished" datetime="2022-03-22T18:04:15+08:00">2022-03-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-23 20:14:10" itemprop="dateModified" datetime="2022-03-23T20:14:10+08:00">2022-03-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JUC/" itemprop="url" rel="index"><span itemprop="name">JUC</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>##从acquire方法(线程竞争获取资源)<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">   //* Attempts to acquire in exclusive mode.（tryAcquire方法尝试以独占方式获取锁)</span><br><span class="line">//* Creates and enqueues node for current thread and given mode(addWaiter方法将当前线程封装成Node结点取获取锁)</span><br><span class="line">// acquireQueued(让当前线程以自旋的方式不断的去获取锁资源,该方法还包括抢占锁资源失败后挂起当前线程、线程唤醒后相关的逻辑)</span><br><span class="line">// selfInterrupt()中断当前线程</span><br><span class="line"> public final void acquire(int arg) &#123;</span><br><span class="line">       if (!tryAcquire(arg) &amp;&amp;</span><br><span class="line">           acquireQueued(addWaiter(Node.EXCLUSIVE), arg))</span><br><span class="line">           selfInterrupt();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/22/AQS%E6%BA%90%E7%A0%81-%E9%87%8D%E8%A6%81%E7%9A%84%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/22/AQS%E6%A6%82%E8%BF%B0,%E6%9E%B6%E6%9E%84-22/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/whole.png">
-      <meta itemprop="name" content="小鲸鱼">
-      <meta itemprop="description" content="凡事以理想为因,实行为过">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Whole">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/22/AQS%E6%A6%82%E8%BF%B0,%E6%9E%B6%E6%9E%84-22/" class="post-title-link" itemprop="url">AQS概述、体系架构、属性分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-22 18:04:15" itemprop="dateCreated datePublished" datetime="2022-03-22T18:04:15+08:00">2022-03-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-23 20:14:30" itemprop="dateModified" datetime="2022-03-23T20:14:30+08:00">2022-03-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JUC/" itemprop="url" rel="index"><span itemprop="name">JUC</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>##AQS的概述<br>AQS的全称是AbstractQueuedSynchronizer(抽象队列同步器),它是其他同步器组件的基础框架并且是整个JUC体系的基石,AQS是基于CLH（Craig、Landin 和 Hagersten）锁定队列的变体实现FIFO(双向队列),每一个抢占资源的线程被封装成了Node结点来实现对资源的分配,内部维护了一个同步状态变量status(private volatile int state),通过CAS的方式进行原子更新状态变量Status实现加锁解锁操作</p>
-<p><img src="http://r95hnmq9s.hn-bkt.clouddn.com/123131.png" alt="RUNOOB 图标"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/22/AQS%E6%A6%82%E8%BF%B0,%E6%9E%B6%E6%9E%84-22/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
 
@@ -547,7 +719,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -593,7 +765,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">小鲸鱼</span>
 </div>
-  <div class="powered-by">تطبيق الموقع <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
 
         
