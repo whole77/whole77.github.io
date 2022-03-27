@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="剑指 Offer 34. 二叉树中和为某一值的路径 class Solution &amp;#123; List&lt;List&lt;Integer&gt;&gt; list_1 &#x3D; new LinkedList&lt;&gt;(); LinkedList&lt;Integer&gt; list_2 &#x3D; new LinkedList&lt;&gt;(); public List&lt;List&lt;I">
+  <meta name="description" content="剑指 Offer 34. 二叉树中和为某一值的路径123456789101112131415161718192021class Solution &amp;#123;   List&lt;List&lt;Integer&gt;&gt; list_1 &#x3D; new LinkedList&lt;&gt;();   LinkedList&lt;Integer&gt; list_2 &#x3D; new LinkedList">
 <meta property="og:type" content="article">
 <meta property="og:title" content="leetcode_2022&#x2F;3&#x2F;23">
 <meta property="og:url" content="http://example.com/2022/03/22/leetcode-2022-3-23/index.html">
 <meta property="og:site_name" content="Whole">
-<meta property="og:description" content="剑指 Offer 34. 二叉树中和为某一值的路径 class Solution &amp;#123; List&lt;List&lt;Integer&gt;&gt; list_1 &#x3D; new LinkedList&lt;&gt;(); LinkedList&lt;Integer&gt; list_2 &#x3D; new LinkedList&lt;&gt;(); public List&lt;List&lt;I">
+<meta property="og:description" content="剑指 Offer 34. 二叉树中和为某一值的路径123456789101112131415161718192021class Solution &amp;#123;   List&lt;List&lt;Integer&gt;&gt; list_1 &#x3D; new LinkedList&lt;&gt;();   LinkedList&lt;Integer&gt; list_2 &#x3D; new LinkedList">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-22T10:04:15.000Z">
-<meta property="article:modified_time" content="2022-03-23T15:28:22.032Z">
+<meta property="article:modified_time" content="2022-03-27T03:01:33.821Z">
 <meta property="article:author" content="小鲸鱼">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-23 23:28:22" itemprop="dateModified" datetime="2022-03-23T23:28:22+08:00">2022-03-23</time>
+                <time title="修改时间：2022-03-27 11:01:33" itemprop="dateModified" datetime="2022-03-27T11:01:33+08:00">2022-03-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,48 +258,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <pre><code>剑指 Offer 34. 二叉树中和为某一值的路径
-class Solution &#123;
-List&lt;List&lt;Integer&gt;&gt; list_1 = new LinkedList&lt;&gt;();
-LinkedList&lt;Integer&gt; list_2 = new LinkedList&lt;&gt;();
-public List&lt;List&lt;Integer&gt;&gt; pathSum(TreeNode root, int target) &#123;
-   dfs(root,target);
-   return list_1;
-&#125;
-public void dfs(TreeNode root,int target)&#123;
-    if(root==null)return;
-    target-=root.val;
-   list_2.add(root.val);
-   if(root.left==null&amp;&amp;root.right==null&amp;&amp;target==0) &#123;
-     list_1.add(new LinkedList&lt;&gt;(list_2));//不能提前return会导致队列二无法回溯导致结果不对
-   &#125;
-   dfs(root.left,target);
-   dfs(root.right,target);
-   // target-=root.val;为什么不需要再加上root.val，因为Java是值传递,是将实参复制一份传给函数,在函数里修改并不影响实参,所以加不加都没影响
-   list_2.removeLast();
-   return;
-&#125;
-&#125;
+        <h2 id="剑指-Offer-34-二叉树中和为某一值的路径"><a href="#剑指-Offer-34-二叉树中和为某一值的路径" class="headerlink" title="剑指 Offer 34. 二叉树中和为某一值的路径"></a>剑指 Offer 34. 二叉树中和为某一值的路径</h2><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">   List&lt;List&lt;Integer&gt;&gt; list_1 = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">   LinkedList&lt;Integer&gt; list_2 = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">   <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">pathSum</span><span class="params">(TreeNode root, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">      dfs(root,target);</span><br><span class="line">      <span class="keyword">return</span> list_1;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dfs</span><span class="params">(TreeNode root,<span class="type">int</span> target)</span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(root==<span class="literal">null</span>)<span class="keyword">return</span>;</span><br><span class="line">       target-=root.val;</span><br><span class="line">      list_2.add(root.val);</span><br><span class="line">      <span class="keyword">if</span>(root.left==<span class="literal">null</span>&amp;&amp;root.right==<span class="literal">null</span>&amp;&amp;target==<span class="number">0</span>) &#123;</span><br><span class="line">        list_1.add(<span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;(list_2));<span class="comment">//不能提前return会导致队列二无法回溯导致结果不对</span></span><br><span class="line">      &#125;</span><br><span class="line">      dfs(root.left,target);</span><br><span class="line">      dfs(root.right,target);</span><br><span class="line">      <span class="comment">// target-=root.val;为什么不需要再加上root.val，因为Java是值传递,是将实参复制一份传给函数,在函数里修改并不影响实参,所以加不加都没影响</span></span><br><span class="line">      list_2.removeLast();</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </code></pre>
-<p>##剑指 Offer 29. 顺时针打印矩阵</p>
-<pre><code>class Solution &#123;
-public int[] spiralOrder(int[][] matrix) &#123;
-   if(matrix.length==0)return new int[0];
-   int l = 0,r = matrix[0].length-1,b = matrix.length-1,t = 0 ,x =0  ;
-    int res[] = new int[(b+1)*(r+1)];
-    while(true) &#123;
-        for(int i = l; i &lt;= r; i++) res[x++] = matrix[t][i]; // 从左往右遍历
-        if(++t &gt; b) break;//边界条件收缩,行数向下收缩t++,如果大于b,结束循环返回
-        for(int i = t; i &lt;= b; i++) res[x++] = matrix[i][r]; // 从上往下遍历
-        if(l &gt; --r) break;//边界条件收缩,列数向左搜索
-        for(int i = r; i &gt;= l; i--) res[x++] = matrix[b][i]; // 从右往左
-        if(t &gt; --b) break;//边界条件收缩,行数向上收缩
-        for(int i = b; i &gt;= t; i--) res[x++] = matrix[i][l]; // 从下往上.
-        if(++l &gt; r) break;//边界条件收缩,列数向右收缩
-    &#125;
-    return res;
-&#125;
-&#125;
+<h2 id="剑指-Offer-29-顺时针打印矩阵"><a href="#剑指-Offer-29-顺时针打印矩阵" class="headerlink" title="剑指 Offer 29. 顺时针打印矩阵"></a>剑指 Offer 29. 顺时针打印矩阵</h2><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">   <span class="keyword">public</span> <span class="type">int</span>[] spiralOrder(<span class="type">int</span>[][] matrix) &#123;</span><br><span class="line">      <span class="keyword">if</span>(matrix.length==<span class="number">0</span>)<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">0</span>];</span><br><span class="line">      <span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">0</span>,r = matrix[<span class="number">0</span>].length-<span class="number">1</span>,b = matrix.length-<span class="number">1</span>,t = <span class="number">0</span> ,x =<span class="number">0</span>  ;</span><br><span class="line">       <span class="type">int</span> res[] = <span class="keyword">new</span> <span class="title class_">int</span>[(b+<span class="number">1</span>)*(r+<span class="number">1</span>)];</span><br><span class="line">       <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">           <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> l; i &lt;= r; i++) res[x++] = matrix[t][i]; <span class="comment">// 从左往右遍历</span></span><br><span class="line">           <span class="keyword">if</span>(++t &gt; b) <span class="keyword">break</span>;<span class="comment">//边界条件收缩,行数向下收缩t++,如果大于b,结束循环返回</span></span><br><span class="line">           <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> t; i &lt;= b; i++) res[x++] = matrix[i][r]; <span class="comment">// 从上往下遍历</span></span><br><span class="line">           <span class="keyword">if</span>(l &gt; --r) <span class="keyword">break</span>;<span class="comment">//边界条件收缩,列数向左搜索</span></span><br><span class="line">           <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> r; i &gt;= l; i--) res[x++] = matrix[b][i]; <span class="comment">// 从右往左</span></span><br><span class="line">           <span class="keyword">if</span>(t &gt; --b) <span class="keyword">break</span>;<span class="comment">//边界条件收缩,行数向上收缩</span></span><br><span class="line">           <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> b; i &gt;= t; i--) res[x++] = matrix[i][l]; <span class="comment">// 从下往上.</span></span><br><span class="line">           <span class="keyword">if</span>(++l &gt; r) <span class="keyword">break</span>;<span class="comment">//边界条件收缩,列数向右收缩</span></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> res;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </code></pre>
 
     </div>
@@ -337,13 +298,10 @@ public int[] spiralOrder(int[][] matrix) &#123;
 
         
     <div class="post-nav">
+      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2022/03/22/leetcode-2022-3-22/" rel="prev" title="leetcode_2022/3/22">
-      <i class="fa fa-chevron-left"></i> leetcode_2022/3/22
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/03/22/AQS%E6%BA%90%E7%A0%81-%E9%87%8D%E8%A6%81%E7%9A%84%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95/" rel="next" title="AQS源码-重要的成员方法">
-      AQS源码-重要的成员方法 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/03/22/leetcode-2022-3-22/" rel="next" title="leetcode_2022/3/22">
+      leetcode_2022/3/22 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -408,6 +366,7 @@ public int[] spiralOrder(int[][] matrix) &#123;
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-34-%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="nav-number">1.</span> <span class="nav-text">剑指 Offer 34. 二叉树中和为某一值的路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-29-%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5"><span class="nav-number">2.</span> <span class="nav-text">剑指 Offer 29. 顺时针打印矩阵</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -423,7 +382,7 @@ public int[] spiralOrder(int[][] matrix) &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -469,7 +428,7 @@ public int[] spiralOrder(int[][] matrix) &#123;
   </span>
   <span class="author" itemprop="copyrightHolder">小鲸鱼</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
 
         
