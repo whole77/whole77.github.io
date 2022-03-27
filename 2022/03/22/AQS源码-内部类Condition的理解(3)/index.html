@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="Whole">
 <meta property="og:description" content="先看一下同步队列,条件队列，同步器三者的关系结构图(该图来自https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;163621874)">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://r95hnmq9s.hn-bkt.clouddn.com/condition.png">
+<meta property="og:image" content="http://example.com/condition.png">
 <meta property="article:published_time" content="2022-03-22T10:04:15.000Z">
-<meta property="article:modified_time" content="2022-03-27T03:00:45.902Z">
+<meta property="article:modified_time" content="2022-03-27T03:26:34.369Z">
 <meta property="article:author" content="小鲸鱼">
 <meta property="article:tag" content="AQS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://r95hnmq9s.hn-bkt.clouddn.com/condition.png">
+<meta name="twitter:image" content="http://example.com/condition.png">
 
 <link rel="canonical" href="http://example.com/2022/03/22/AQS%E6%BA%90%E7%A0%81-%E5%86%85%E9%83%A8%E7%B1%BBCondition%E7%9A%84%E7%90%86%E8%A7%A3(3)/">
 
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-27 11:00:45" itemprop="dateModified" datetime="2022-03-27T11:00:45+08:00">2022-03-27</time>
+                <time title="修改时间：2022-03-27 11:26:34" itemprop="dateModified" datetime="2022-03-27T11:26:34+08:00">2022-03-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,7 +263,7 @@
         <ul>
 <li>先看一下同步队列,条件队列，同步器三者的关系结构图(该图来自<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/163621874">https://zhuanlan.zhihu.com/p/163621874</a>)</li>
 </ul>
-<p> <img src="http://r95hnmq9s.hn-bkt.clouddn.com/condition.png"></p>
+<p> <img src="/condition.png"></p>
 <span id="more"></span>
 <h2 id="AQS中实现Condition接口的内部类ConditionObject"><a href="#AQS中实现Condition接口的内部类ConditionObject" class="headerlink" title="AQS中实现Condition接口的内部类ConditionObject"></a>AQS中实现Condition接口的内部类ConditionObject</h2><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConditionObject</span> <span class="keyword">implements</span> <span class="title class_">Condition</span>, java.io.Serializable &#123;</span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">1173984872572414699L</span>;</span><br><span class="line">       <span class="comment">//指向条件队列的头节点</span></span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">transient</span> Node firstWaiter;</span><br><span class="line">       <span class="comment">//指向条件队列的尾结点</span></span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">transient</span> Node lastWaiter;</span><br><span class="line">	<span class="comment">//无参构造方法</span></span><br><span class="line">       <span class="keyword">public</span> <span class="title function_">ConditionObject</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">	。。。。。。</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 </code></pre>
@@ -460,7 +460,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">小鲸鱼</span>
 </div>
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">تطبيق الموقع <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
 
         
