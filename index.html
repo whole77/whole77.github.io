@@ -187,6 +187,203 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/22/KMP%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/whole.png">
+      <meta itemprop="name" content="小鲸鱼">
+      <meta itemprop="description" content="凡事以理想为因,实行为过">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Whole">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/22/KMP%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">KMP算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-22 18:04:15" itemprop="dateCreated datePublished" datetime="2022-03-22T18:04:15+08:00">2022-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-08 09:32:55" itemprop="dateModified" datetime="2022-04-08T09:32:55+08:00">2022-04-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="KMP算法是用来解决字符串匹配问题的，解决字符串匹配问题主要有两种方法"><a href="#KMP算法是用来解决字符串匹配问题的，解决字符串匹配问题主要有两种方法" class="headerlink" title="KMP算法是用来解决字符串匹配问题的，解决字符串匹配问题主要有两种方法"></a>KMP算法是用来解决字符串匹配问题的，解决字符串匹配问题主要有两种方法</h2><h3 id="第一种-使用暴力枚举法，穷举出所有的可能，进行判断，时间复杂度为Log-M-N"><a href="#第一种-使用暴力枚举法，穷举出所有的可能，进行判断，时间复杂度为Log-M-N" class="headerlink" title="第一种: 使用暴力枚举法，穷举出所有的可能，进行判断，时间复杂度为Log(M*N)"></a>第一种: 使用暴力枚举法，穷举出所有的可能，进行判断，时间复杂度为Log(M*N)</h3><h3 id="第二种：使用KMP算法，使得时间复杂度能够将为线性"><a href="#第二种：使用KMP算法，使得时间复杂度能够将为线性" class="headerlink" title="第二种：使用KMP算法，使得时间复杂度能够将为线性"></a>第二种：使用KMP算法，使得时间复杂度能够将为线性</h3><ul>
+<li>以力扣原题<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-strstr/">力扣28题</a>为例，该题就是一个典型的KMP算法使用例子</li>
+</ul>
+<h1 id="暴力枚举法-穷举出所有的可能进行判断，时间复杂度为Log-M-N"><a href="#暴力枚举法-穷举出所有的可能进行判断，时间复杂度为Log-M-N" class="headerlink" title="暴力枚举法(穷举出所有的可能进行判断，时间复杂度为Log(M*N))"></a>暴力枚举法(穷举出所有的可能进行判断，时间复杂度为Log(M*N))</h1><p> &#96;&#96;Java</p>
+<pre><code>class Solution &#123;
+public int strStr(String haystack, String needle) &#123;
+    int n = haystack.length(), m = needle.length();
+    for (int i = 0; i + m &lt;= n; i++) &#123;
+        boolean flag = true;
+        for (int j = 0; j &lt; m; j++) &#123;
+            if (haystack.charAt(i + j) != needle.charAt(j)) &#123;
+                flag = false;
+                break;
+            &#125;
+        &#125;
+        if (flag) &#123;
+            return i;
+        &#125;
+    &#125;
+    return -1;
+ &#125;
+&#125;
+
+``
+</code></pre>
+<h2 id="KMP算法解决字符串匹配问题"><a href="#KMP算法解决字符串匹配问题" class="headerlink" title="KMP算法解决字符串匹配问题"></a>KMP算法解决字符串匹配问题</h2><p>###要理解KMP算法，必须要知道几个概念</p>
+<ul>
+<li><p>KMP如何做到线性的时间复杂度，使用KMP算法当出现字符串不匹配时，我们可以知道一部分之前已经匹配的文本内容，从而避免了从头匹配的过程</p>
+</li>
+<li><p>要做到知道之前已经匹配的文本内容，我们必须知道几个概念</p>
+<ul>
+<li>字符串前缀: 不包含最后一个字符的所有以第一个字符开头的连续子串。(例如aabaaf中连续子串有a,aa,aab,aaba,aabaa) </li>
+<li>字符串后缀: 不包含第一个字符的所有以最后一个字符结尾的连续子串。(例如aabaaf中连续子串有f,af,aaf,baaf,abaaf)</li>
+</ul>
+</li>
+<li><p>前缀表也即是next数组，next数组的含义为当模式串与主串(文本串)不匹配的时候，模式串应该从哪里开始重新匹配。</p>
+<ul>
+<li>例如文本串aabaabaafa与模式串aabaaf，显然在第一次匹配的时候在文本串aabaab中b字符与模式串aabaaf中f字符不相等，如果是暴力枚举法的话需要将文本串指针指向，向后移动一位继续匹配，在使用了KMP算法后我们可以使用前缀表来得出模式串应该从哪里开始重新匹配，为什么从前缀表就可以得出模式串应该从哪里开始重新匹配呢？<ul>
+<li>前缀表其实记录的就是最长相等前后缀的长度，例如aabaa中最长相等前后缀的长度为2(也即是aa)，还是上面文本串和模式串的例子，在第一次不匹配的时候我们可以查看模式串不匹配字符前的最长相等前后缀(aa),那么我们就可以变相的将该串的前缀子串移动到已匹配的后缀子串的位置(只是模式串匹配指针的移动，从而可以看成变相的导致前缀子串的移动)，从而避免了暴力枚举中重复匹配的过程(在当前例子中也即是从b字符继续匹配)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>前缀表的求解也即是next数组的求解</p>
+</li>
+</ul>
+<p> &#96;&#96;Java</p>
+<pre><code>public void getNext(int[] next,String tar)&#123;
+    int j = 0;
+    next[0] = 0;
+    for(int i=1;i&lt;tar.length();i++)&#123;
+        while(j&gt;0&amp;&amp;tar.charAt(i)!=tar.charAt(j))&#123;
+             j = next[j-1];
+        &#125;
+        if(tar.charAt(i)==tar.charAt(j))&#123;
+            j++;
+        &#125;
+        next[i] = j;
+    &#125;
+&#125;
+</code></pre>
+<p>&#96;&#96;</p>
+<ol>
+<li>next数组的求解可以分为三步 第一步next数组初始化</li>
+<li>第二步 处理前后缀不同的情况</li>
+<li>第三步 处理前后缀相同的情况</li>
+</ol>
+<p> &#96;&#96;Java</p>
+<pre><code>class Solution &#123;
+public int strStr(String haystack, String needle) &#123;
+     if (needle.length() == 0) &#123;//边界判断
+        return 0;
+    &#125;
+     int []next = new int[needle.length()];//前缀表也可以说是next数组
+     getNext(next,needle);
+     int j = 0;
+     for(int i=0;i&lt;haystack.length();i++)&#123;
+        while(j&gt;0&amp;&amp;(haystack.charAt(i)!=needle.charAt(j)))&#123;
+            j = next[j-1];
+        &#125;
+        if(haystack.charAt(i)==needle.charAt(j))&#123;
+            j++;
+        &#125;
+        if(j==needle.length())&#123;
+           return i-needle.length()+1;
+        &#125;
+     &#125;
+     return -1;
+&#125;
+public void getNext(int[] next,String tar)&#123;
+    int j = 0;
+    next[0] = 0;
+    for(int i=1;i&lt;tar.length();i++)&#123;
+        while(j&gt;0&amp;&amp;tar.charAt(i)!=tar.charAt(j))&#123;
+             j = next[j-1];
+        &#125;
+        if(tar.charAt(i)==tar.charAt(j))&#123;
+            j++;
+        &#125;
+        next[i] = j;
+    &#125;
+&#125;
+
+&#125;
+</code></pre>
+<p>&#96;&#96;</p>
+<h3 id="最后附上几张图帮助理解以下图均来自代码随想录"><a href="#最后附上几张图帮助理解以下图均来自代码随想录" class="headerlink" title="最后附上几张图帮助理解以下图均来自代码随想录"></a>最后附上几张图帮助理解<a target="_blank" rel="noopener" href="https://www.programmercarl.com/">以下图均来自代码随想录</a></h3><img src="http://r95hnmq9s.hn-bkt.clouddn.com/2341.png">
+<iframe height="500" width="500" src="http://r95hnmq9s.hn-bkt.clouddn.com/2342.gif">
+</iframe>
+      
+    </div>
+
+    
+    
+    
+	
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/22/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%BA%90%E7%A0%81%E8%AF%A6%E8%A7%A3(ThreadPoolExecutor)(2)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -218,7 +415,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-31 14:05:28" itemprop="dateModified" datetime="2022-03-31T14:05:28+08:00">2022-03-31</time>
+                <time title="修改时间：2022-04-07 21:09:32" itemprop="dateModified" datetime="2022-04-07T21:09:32+08:00">2022-04-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,7 +440,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>16 分钟</span>
+              <span>17 分钟</span>
             </span>
 
         </div>
@@ -255,7 +452,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="THREADPOOLEXECUTOR成员变量及内部类WORKER的属性详解"><a href="#THREADPOOLEXECUTOR成员变量及内部类WORKER的属性详解" class="headerlink" title="THREADPOOLEXECUTOR成员变量及内部类WORKER的属性详解"></a>THREADPOOLEXECUTOR成员变量及内部类WORKER的属性详解</h2><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">主池控制状态，ctl，是一个原子整数包装两个概念字段workerCount，有效线程数runState，线程池状态</span></span><br><span class="line"><span class="comment">	(1):1：workerCount 线程池种有效线程数  2: runState 运行状态 例如运行 ，关闭等</span></span><br><span class="line"><span class="comment">为了将它们打包到一个 int 中，我们将 workerCount 限制为 (2^29)-1（大约 5 亿）个线程，而不是 (2^31)-1 (十亿) 个线程，workerCount占用低29位，runState占用高三位</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="type">AtomicInteger</span> <span class="variable">ctl</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicInteger</span>(ctlOf(RUNNING, <span class="number">0</span>));</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">COUNT_BITS</span> <span class="operator">=</span> Integer.SIZE - <span class="number">3</span>;</span><br><span class="line"><span class="comment">//线程数容量，低29位表示有效线程数，0001,1111,1111,1111,1111,1111,1111,1111</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CAPACITY</span>   <span class="operator">=</span> (<span class="number">1</span> &lt;&lt; COUNT_BITS) - <span class="number">1</span>;</span><br><span class="line">   <span class="comment">//  运行状态(从小到大)</span></span><br><span class="line">	<span class="number">1110</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> 运行 -<span class="number">1</span> &lt;&lt; COUNT_BITS</span><br><span class="line">    <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> 关闭 <span class="number">0</span> &lt;&lt; COUNT_BITS</span><br><span class="line">	    <span class="number">0010</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> 停止 <span class="number">1</span> &lt;&lt; COUNT_BITS</span><br><span class="line"> 		<span class="number">0100</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> 整理 <span class="number">2</span> &lt;&lt; COUNT_BITS</span><br><span class="line">		<span class="number">0110</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> 终止 <span class="number">3</span> &lt;&lt; COUNT_BITS</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">RUNNING</span>    <span class="operator">=</span> -<span class="number">1</span> &lt;&lt; COUNT_BITS;<span class="comment">//接受新任务并处理排队的任务</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">SHUTDOWN</span>   <span class="operator">=</span>  <span class="number">0</span> &lt;&lt; COUNT_BITS;<span class="comment">//不接受新任务，但处理排队的任务</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">STOP</span>       <span class="operator">=</span>  <span class="number">1</span> &lt;&lt; COUNT_BITS;<span class="comment">//不接受新任务，不处理排队的任务，并中断正在进行的任务</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">TIDYING</span>    <span class="operator">=</span>  <span class="number">2</span> &lt;&lt; COUNT_BITS;<span class="comment">//所有任务都已终止，workerCount 为零， 转换到状态 TIDYING 的线程 将运行 terminate() 钩子方法</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">TERMINATED</span> <span class="operator">=</span>  <span class="number">3</span> &lt;&lt; COUNT_BITS;<span class="comment">//终止已完成</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">// 获取Ctl高三位也即是运行时状态</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">runStateOf</span><span class="params">(<span class="type">int</span> c)</span>     &#123; <span class="keyword">return</span> c &amp; ~CAPACITY; &#125;</span><br><span class="line"><span class="comment">//获取Ctl低29位也即是有效线程数</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">workerCountOf</span><span class="params">(<span class="type">int</span> c)</span>  &#123; <span class="keyword">return</span> c &amp; CAPACITY; &#125;</span><br><span class="line"><span class="comment">//得到ctl值，高三位与低29位或运算</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">ctlOf</span><span class="params">(<span class="type">int</span> rs, <span class="type">int</span> wc)</span> &#123; <span class="keyword">return</span> rs | wc; &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">//判断运行时状态的大小</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">runStateLessThan</span><span class="params">(<span class="type">int</span> c, <span class="type">int</span> s)</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> c &lt; s;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">runStateAtLeast</span><span class="params">(<span class="type">int</span> c, <span class="type">int</span> s)</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> c &gt;= s;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//判断线程池是否处于运行状态，因为比SHUTDOWN小的只有Running</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">isRunning</span><span class="params">(<span class="type">int</span> c)</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> c &lt; SHUTDOWN;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//以CAS的方式增加有效线程数(WorkerCount)</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">compareAndIncrementWorkerCount</span><span class="params">(<span class="type">int</span> expect)</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> ctl.compareAndSet(expect, expect + <span class="number">1</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//以CAS的方式减少有效线程数</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">compareAndDecrementWorkerCount</span><span class="params">(<span class="type">int</span> expect)</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> ctl.compareAndSet(expect, expect - <span class="number">1</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//ctl 的 workerCount 字段减一。这仅在线程突然终止时调用</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">decrementWorkerCount</span><span class="params">()</span> &#123;</span><br><span class="line">       <span class="keyword">do</span> &#123;&#125; <span class="keyword">while</span> (! compareAndDecrementWorkerCount(ctl.get()));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//工作队列</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> BlockingQueue&lt;Runnable&gt; workQueue;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//基于AQS实现的Lock锁</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">ReentrantLock</span> <span class="variable">mainLock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReentrantLock</span>();</span><br><span class="line"></span><br><span class="line">   <span class="comment">//包含池中所有工作线程的集合。仅在 持有 mainLock 时访问,worker集合</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> HashSet&lt;Worker&gt; workers = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Worker&gt;();</span><br><span class="line"></span><br><span class="line">   <span class="comment">//支持 awaitTermination 的等待条件</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">Condition</span> <span class="variable">termination</span> <span class="operator">=</span> mainLock.newCondition();</span><br><span class="line"></span><br><span class="line">   <span class="comment">//跟踪获得的最大池大小。只能在 mainLock 下访问。</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">int</span> largestPoolSize;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//已完成任务的计数器(总的完成线程数)。仅在终止工作线程时更新。只能在 mainLock 下访问</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">long</span> completedTaskCount;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//线程工厂</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> ThreadFactory threadFactory;</span><br><span class="line">	</span><br><span class="line"><span class="comment">//拒绝策略</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> RejectedExecutionHandler handler;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//空闲线程的超市时间</span></span><br><span class="line"><span class="comment">//核心线程是否回收与allowCoreThreadTimeOut()方法有关，当位true时，核心线程使用完也会一同会被回收，默认缺省值为false</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">long</span> keepAliveTime;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//是否允许核心线程超时，默认false，false情况下核心线程会一直存活。</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">boolean</span> allowCoreThreadTimeOut;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//核心线程的数量</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">int</span> corePoolSize;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//最大线程数</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">int</span> maximumPoolSize;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//默认的拒绝策略,直接抛异常</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">RejectedExecutionHandler</span> <span class="variable">defaultHandler</span> <span class="operator">=</span></span><br><span class="line">       <span class="keyword">new</span> <span class="title class_">AbortPolicy</span>();</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">RuntimePermission</span> <span class="variable">shutdownPerm</span> <span class="operator">=</span></span><br><span class="line">       <span class="keyword">new</span> <span class="title class_">RuntimePermission</span>(<span class="string">&quot;modifyThread&quot;</span>);</span><br><span class="line"></span><br><span class="line">   <span class="comment">//Worker类，每个Worker包含一个线程、一个初始任务、一个任务计算器</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Worker</span></span><br><span class="line">       <span class="keyword">extends</span> <span class="title class_">AbstractQueuedSynchronizer</span></span><br><span class="line">       <span class="keyword">implements</span> <span class="title class_">Runnable</span></span><br><span class="line">   &#123;</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">6138294804551838833L</span>;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//Worker对应的线程</span></span><br><span class="line">       <span class="keyword">final</span> Thread thread;</span><br><span class="line">       <span class="comment">//初始任务(当前线程首先需要执行的任务)</span></span><br><span class="line">       Runnable firstTask;</span><br><span class="line">       <span class="comment">//线程任务计数器(当前worker执行成功的任务数)</span></span><br><span class="line">       <span class="keyword">volatile</span> <span class="type">long</span> completedTasks;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       Worker(Runnable firstTask) &#123;</span><br><span class="line">           setState(-<span class="number">1</span>); <span class="comment">// inhibit interrupts until runWorker</span></span><br><span class="line">           <span class="built_in">this</span>.firstTask = firstTask;</span><br><span class="line">           <span class="built_in">this</span>.thread = getThreadFactory().newThread(<span class="built_in">this</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">      </span><br><span class="line">       <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">//将主运行循环委托给外部 runWorker</span></span><br><span class="line">           runWorker(<span class="built_in">this</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">      </span><br><span class="line">	<span class="comment">//通过AQS的同步状态来实现锁机制。state为0时代表锁未被获取（解锁状态），</span></span><br><span class="line">    	state为<span class="number">1</span>时代表锁已经被获取（加锁状态）。</span><br><span class="line">       <span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">isHeldExclusively</span><span class="params">()</span> &#123;</span><br><span class="line">           <span class="keyword">return</span> getState() != <span class="number">0</span>;</span><br><span class="line">       &#125;</span><br><span class="line">	<span class="comment">//尝试获取锁</span></span><br><span class="line">       <span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">tryAcquire</span><span class="params">(<span class="type">int</span> unused)</span> &#123;</span><br><span class="line">           <span class="keyword">if</span> (compareAndSetState(<span class="number">0</span>, <span class="number">1</span>)) &#123;</span><br><span class="line">               setExclusiveOwnerThread(Thread.currentThread());</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">	<span class="comment">//尝试释放锁</span></span><br><span class="line">       <span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">tryRelease</span><span class="params">(<span class="type">int</span> unused)</span> &#123;</span><br><span class="line">           setExclusiveOwnerThread(<span class="literal">null</span>);</span><br><span class="line">           setState(<span class="number">0</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">       &#125;</span><br><span class="line">	</span><br><span class="line">       <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">lock</span><span class="params">()</span>        &#123; acquire(<span class="number">1</span>); &#125;</span><br><span class="line">       <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">tryLock</span><span class="params">()</span>  &#123; <span class="keyword">return</span> tryAcquire(<span class="number">1</span>); &#125;</span><br><span class="line">       <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">unlock</span><span class="params">()</span>      &#123; release(<span class="number">1</span>); &#125;</span><br><span class="line">       <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isLocked</span><span class="params">()</span> &#123; <span class="keyword">return</span> isHeldExclusively(); &#125;</span><br><span class="line">	<span class="comment">//确保线程已经运行并且中断标志为还是false时，就执行中断操作。</span></span><br><span class="line">       <span class="keyword">void</span> <span class="title function_">interruptIfStarted</span><span class="params">()</span> &#123;</span><br><span class="line">           Thread t;</span><br><span class="line">           <span class="keyword">if</span> (getState() &gt;= <span class="number">0</span> &amp;&amp; (t = thread) != <span class="literal">null</span> &amp;&amp; !t.isInterrupted()) &#123;</span><br><span class="line">               <span class="keyword">try</span> &#123;</span><br><span class="line">                   t.interrupt();</span><br><span class="line">               &#125; <span class="keyword">catch</span> (SecurityException ignore) &#123;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+          <h2 id="THREADPOOLEXECUTOR成员变量及内部类WORKER的属性详解"><a href="#THREADPOOLEXECUTOR成员变量及内部类WORKER的属性详解" class="headerlink" title="THREADPOOLEXECUTOR成员变量及内部类WORKER的属性详解"></a>THREADPOOLEXECUTOR成员变量及内部类WORKER的属性详解</h2><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">主池控制状态，ctl，是一个原子整数包装两个概念字段workerCount，有效线程数runState，线程池状态</span></span><br><span class="line"><span class="comment">	(1):1：workerCount 线程池种有效线程数  2: runState 运行状态 例如运行 ，关闭等</span></span><br><span class="line"><span class="comment">为了将它们打包到一个 int 中，我们将 workerCount 限制为 (2^29)-1（大约 5 亿）个线程，而不是 (2^31)-1 (十亿) 个线程，workerCount占用低29位，runState占用高三位</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="type">AtomicInteger</span> <span class="variable">ctl</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicInteger</span>(ctlOf(RUNNING, <span class="number">0</span>));</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">COUNT_BITS</span> <span class="operator">=</span> Integer.SIZE - <span class="number">3</span>;</span><br><span class="line"><span class="comment">//线程数容量，低29位表示有效线程数，0001,1111,1111,1111,1111,1111,1111,1111</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CAPACITY</span>   <span class="operator">=</span> (<span class="number">1</span> &lt;&lt; COUNT_BITS) - <span class="number">1</span>;</span><br><span class="line">   <span class="comment">//  运行状态(从小到大)</span></span><br><span class="line">   <span class="number">1110</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> 运行 -<span class="number">1</span> &lt;&lt; COUNT_BITS</span><br><span class="line">    <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> 关闭 <span class="number">0</span> &lt;&lt; COUNT_BITS</span><br><span class="line">	    <span class="number">0010</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> 停止 <span class="number">1</span> &lt;&lt; COUNT_BITS</span><br><span class="line"> 	    <span class="number">0100</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> 整理 <span class="number">2</span> &lt;&lt; COUNT_BITS</span><br><span class="line">	    <span class="number">0110</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> 终止 <span class="number">3</span> &lt;&lt; COUNT_BITS</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">RUNNING</span>    <span class="operator">=</span> -<span class="number">1</span> &lt;&lt; COUNT_BITS;<span class="comment">//接受新任务并处理排队的任务</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">SHUTDOWN</span>   <span class="operator">=</span>  <span class="number">0</span> &lt;&lt; COUNT_BITS;<span class="comment">//不接受新任务，但处理排队的任务</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">STOP</span>       <span class="operator">=</span>  <span class="number">1</span> &lt;&lt; COUNT_BITS;<span class="comment">//不接受新任务，不处理排队的任务，并中断正在进行的任务</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">TIDYING</span>    <span class="operator">=</span>  <span class="number">2</span> &lt;&lt; COUNT_BITS;<span class="comment">//所有任务都已终止，workerCount 为零， 转换到状态 TIDYING 的线程 将运行 terminate() 钩子方法</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">TERMINATED</span> <span class="operator">=</span>  <span class="number">3</span> &lt;&lt; COUNT_BITS;<span class="comment">//终止已完成</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">// 获取Ctl高三位也即是运行时状态</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">runStateOf</span><span class="params">(<span class="type">int</span> c)</span>     &#123; <span class="keyword">return</span> c &amp; ~CAPACITY; &#125;</span><br><span class="line"><span class="comment">//获取Ctl低29位也即是有效线程数</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">workerCountOf</span><span class="params">(<span class="type">int</span> c)</span>  &#123; <span class="keyword">return</span> c &amp; CAPACITY; &#125;</span><br><span class="line"><span class="comment">//得到ctl值，高三位与低29位或运算</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">ctlOf</span><span class="params">(<span class="type">int</span> rs, <span class="type">int</span> wc)</span> &#123; <span class="keyword">return</span> rs | wc; &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">//判断运行时状态的大小</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">runStateLessThan</span><span class="params">(<span class="type">int</span> c, <span class="type">int</span> s)</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> c &lt; s;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">runStateAtLeast</span><span class="params">(<span class="type">int</span> c, <span class="type">int</span> s)</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> c &gt;= s;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//判断线程池是否处于运行状态，因为比SHUTDOWN小的只有Running</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">isRunning</span><span class="params">(<span class="type">int</span> c)</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> c &lt; SHUTDOWN;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//以CAS的方式增加有效线程数(WorkerCount)</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">compareAndIncrementWorkerCount</span><span class="params">(<span class="type">int</span> expect)</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> ctl.compareAndSet(expect, expect + <span class="number">1</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//以CAS的方式减少有效线程数</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">compareAndDecrementWorkerCount</span><span class="params">(<span class="type">int</span> expect)</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> ctl.compareAndSet(expect, expect - <span class="number">1</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//ctl 的 workerCount 字段减一。这仅在线程突然终止时调用</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">decrementWorkerCount</span><span class="params">()</span> &#123;</span><br><span class="line">       <span class="keyword">do</span> &#123;&#125; <span class="keyword">while</span> (! compareAndDecrementWorkerCount(ctl.get()));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//工作队列</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> BlockingQueue&lt;Runnable&gt; workQueue;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//基于AQS实现的Lock锁</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">ReentrantLock</span> <span class="variable">mainLock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReentrantLock</span>();</span><br><span class="line"></span><br><span class="line">   <span class="comment">//包含池中所有工作线程的集合。仅在 持有 mainLock 时访问,worker集合</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> HashSet&lt;Worker&gt; workers = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Worker&gt;();</span><br><span class="line"></span><br><span class="line">   <span class="comment">//支持 awaitTermination 的等待条件</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">Condition</span> <span class="variable">termination</span> <span class="operator">=</span> mainLock.newCondition();</span><br><span class="line"></span><br><span class="line">   <span class="comment">//跟踪获得的最大池大小。只能在 mainLock 下访问。</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">int</span> largestPoolSize;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//已完成任务的计数器(总的完成线程数)。仅在终止工作线程时更新。只能在 mainLock 下访问</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">long</span> completedTaskCount;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//线程工厂</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> ThreadFactory threadFactory;</span><br><span class="line">	</span><br><span class="line"><span class="comment">//拒绝策略</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> RejectedExecutionHandler handler;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//空闲线程的超市时间</span></span><br><span class="line"><span class="comment">//核心线程是否回收与allowCoreThreadTimeOut()方法有关，当位true时，核心线程使用完也会一同会被回收，默认缺省值为false</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">long</span> keepAliveTime;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//是否允许核心线程超时，默认false，false情况下核心线程会一直存活。</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">boolean</span> allowCoreThreadTimeOut;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//核心线程的数量</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">int</span> corePoolSize;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//最大线程数</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">int</span> maximumPoolSize;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//默认的拒绝策略,直接抛异常</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">RejectedExecutionHandler</span> <span class="variable">defaultHandler</span> <span class="operator">=</span></span><br><span class="line">       <span class="keyword">new</span> <span class="title class_">AbortPolicy</span>();</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">RuntimePermission</span> <span class="variable">shutdownPerm</span> <span class="operator">=</span></span><br><span class="line">       <span class="keyword">new</span> <span class="title class_">RuntimePermission</span>(<span class="string">&quot;modifyThread&quot;</span>);</span><br><span class="line"></span><br><span class="line">   <span class="comment">//Worker类，每个Worker包含一个线程、一个初始任务、一个任务计算器</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Worker</span></span><br><span class="line">       <span class="keyword">extends</span> <span class="title class_">AbstractQueuedSynchronizer</span></span><br><span class="line">       <span class="keyword">implements</span> <span class="title class_">Runnable</span></span><br><span class="line">   &#123;</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">6138294804551838833L</span>;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//Worker对应的线程</span></span><br><span class="line">       <span class="keyword">final</span> Thread thread;</span><br><span class="line">       <span class="comment">//初始任务(当前线程首先需要执行的任务)</span></span><br><span class="line">       Runnable firstTask;</span><br><span class="line">       <span class="comment">//线程任务计数器(当前worker执行成功的任务数)</span></span><br><span class="line">       <span class="keyword">volatile</span> <span class="type">long</span> completedTasks;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       Worker(Runnable firstTask) &#123;</span><br><span class="line">           setState(-<span class="number">1</span>); <span class="comment">// inhibit interrupts until runWorker</span></span><br><span class="line">           <span class="built_in">this</span>.firstTask = firstTask;</span><br><span class="line">           <span class="built_in">this</span>.thread = getThreadFactory().newThread(<span class="built_in">this</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">      </span><br><span class="line">       <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">//将主运行循环委托给外部 runWorker</span></span><br><span class="line">           runWorker(<span class="built_in">this</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">      </span><br><span class="line">	<span class="comment">//通过AQS的同步状态来实现锁机制。state为0时代表锁未被获取（解锁状态），</span></span><br><span class="line">    	state为<span class="number">1</span>时代表锁已经被获取（加锁状态）。</span><br><span class="line">       <span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">isHeldExclusively</span><span class="params">()</span> &#123;</span><br><span class="line">           <span class="keyword">return</span> getState() != <span class="number">0</span>;</span><br><span class="line">       &#125;</span><br><span class="line">	<span class="comment">//尝试获取锁</span></span><br><span class="line">       <span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">tryAcquire</span><span class="params">(<span class="type">int</span> unused)</span> &#123;</span><br><span class="line">           <span class="keyword">if</span> (compareAndSetState(<span class="number">0</span>, <span class="number">1</span>)) &#123;</span><br><span class="line">               setExclusiveOwnerThread(Thread.currentThread());</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">	<span class="comment">//尝试释放锁</span></span><br><span class="line">       <span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">tryRelease</span><span class="params">(<span class="type">int</span> unused)</span> &#123;</span><br><span class="line">           setExclusiveOwnerThread(<span class="literal">null</span>);</span><br><span class="line">           setState(<span class="number">0</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">       &#125;</span><br><span class="line">	</span><br><span class="line">       <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">lock</span><span class="params">()</span>        &#123; acquire(<span class="number">1</span>); &#125;</span><br><span class="line">       <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">tryLock</span><span class="params">()</span>  &#123; <span class="keyword">return</span> tryAcquire(<span class="number">1</span>); &#125;</span><br><span class="line">       <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">unlock</span><span class="params">()</span>      &#123; release(<span class="number">1</span>); &#125;</span><br><span class="line">       <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isLocked</span><span class="params">()</span> &#123; <span class="keyword">return</span> isHeldExclusively(); &#125;</span><br><span class="line">	<span class="comment">//确保线程已经运行并且中断标志为还是false时，就执行中断操作。</span></span><br><span class="line">       <span class="keyword">void</span> <span class="title function_">interruptIfStarted</span><span class="params">()</span> &#123;</span><br><span class="line">           Thread t;</span><br><span class="line">           <span class="keyword">if</span> (getState() &gt;= <span class="number">0</span> &amp;&amp; (t = thread) != <span class="literal">null</span> &amp;&amp; !t.isInterrupted()) &#123;</span><br><span class="line">               <span class="keyword">try</span> &#123;</span><br><span class="line">                   t.interrupt();</span><br><span class="line">               &#125; <span class="keyword">catch</span> (SecurityException ignore) &#123;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 </code></pre>
 <h2 id="线程池核心方法execute方法"><a href="#线程池核心方法execute方法" class="headerlink" title="线程池核心方法execute方法"></a>线程池核心方法execute方法</h2><ul>
 <li>execute()方法执行流程</li>
@@ -326,7 +523,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-31 13:59:42" itemprop="dateModified" datetime="2022-03-31T13:59:42+08:00">2022-03-31</time>
+                <time title="修改时间：2022-04-07 21:04:15" itemprop="dateModified" datetime="2022-04-07T21:04:15+08:00">2022-04-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -367,10 +564,10 @@
 <li>先看一下同步队列,条件队列，同步器三者的关系结构图(该图来自<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/163621874">https://zhuanlan.zhihu.com/p/163621874</a>)</li>
 </ul>
 <img src="http://r95hnmq9s.hn-bkt.clouddn.com/condition.png">
-<%- image_tag(http: r95hnmq9s.hn-bkt.clouddn.com condition.png, [options]) %>
+
 
 <h2 id="AQS中实现Condition接口的内部类ConditionObject"><a href="#AQS中实现Condition接口的内部类ConditionObject" class="headerlink" title="AQS中实现Condition接口的内部类ConditionObject"></a>AQS中实现Condition接口的内部类ConditionObject</h2><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConditionObject</span> <span class="keyword">implements</span> <span class="title class_">Condition</span>, java.io.Serializable &#123;</span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">1173984872572414699L</span>;</span><br><span class="line">       <span class="comment">//指向条件队列的头节点</span></span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">transient</span> Node firstWaiter;</span><br><span class="line">       <span class="comment">//指向条件队列的尾结点</span></span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">transient</span> Node lastWaiter;</span><br><span class="line">	<span class="comment">//无参构造方法</span></span><br><span class="line">       <span class="keyword">public</span> <span class="title function_">ConditionObject</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">	。。。。。。</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-</code></pre></%->
+</code></pre>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/03/22/AQS%E6%BA%90%E7%A0%81-%E5%86%85%E9%83%A8%E7%B1%BBCondition%E7%9A%84%E7%90%86%E8%A7%A3(3)/#more" rel="contents">
@@ -590,199 +787,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/22/leetcode-2022-3-22/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/whole.png">
-      <meta itemprop="name" content="小鲸鱼">
-      <meta itemprop="description" content="凡事以理想为因,实行为过">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Whole">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/22/leetcode-2022-3-22/" class="post-title-link" itemprop="url">leetcode_2022/3/22</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-22 18:04:15" itemprop="dateCreated datePublished" datetime="2022-03-22T18:04:15+08:00">2022-03-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-27 11:02:00" itemprop="dateModified" datetime="2022-03-27T11:02:00+08:00">2022-03-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li>时间复杂度:遍历数组O(N),交换索引下标值O(1),所以时间复杂度为O(1)</li>
-<li>空间复杂度:常数级常数级额外空间<h2 id="剑指-Offer-03-数组中重复的数字"><a href="#剑指-Offer-03-数组中重复的数字" class="headerlink" title="剑指 Offer 03. 数组中重复的数字"></a>剑指 Offer 03. 数组中重复的数字</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findRepeatNumber</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">      <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">while</span>(i &lt; nums.length) &#123;</span><br><span class="line">          <span class="keyword">if</span>(nums[i] == i) &#123;<span class="comment">//当索引值等于索引列下标值时说明不存在重复元素跳过</span></span><br><span class="line">              i++;</span><br><span class="line">              <span class="keyword">continue</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span>(nums[nums[i]] == nums[i]) <span class="keyword">return</span> nums[i];<span class="comment">//当索引下标下有元素时，并且相同说明找到相同元素</span></span><br><span class="line">          <span class="type">int</span> <span class="variable">tmp</span> <span class="operator">=</span> nums[i];<span class="comment">//交换索引对于的值</span></span><br><span class="line">          nums[i] = nums[tmp];</span><br><span class="line">          nums[tmp] = tmp;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/22/leetcode-2022-3-22/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/22/leetcode-2022-3-23/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/whole.png">
-      <meta itemprop="name" content="小鲸鱼">
-      <meta itemprop="description" content="凡事以理想为因,实行为过">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Whole">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/22/leetcode-2022-3-23/" class="post-title-link" itemprop="url">leetcode_2022/3/23</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-22 18:04:15" itemprop="dateCreated datePublished" datetime="2022-03-22T18:04:15+08:00">2022-03-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-27 11:01:33" itemprop="dateModified" datetime="2022-03-27T11:01:33+08:00">2022-03-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="剑指-Offer-34-二叉树中和为某一值的路径"><a href="#剑指-Offer-34-二叉树中和为某一值的路径" class="headerlink" title="剑指 Offer 34. 二叉树中和为某一值的路径"></a>剑指 Offer 34. 二叉树中和为某一值的路径</h2><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">   List&lt;List&lt;Integer&gt;&gt; list_1 = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">   LinkedList&lt;Integer&gt; list_2 = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">   <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">pathSum</span><span class="params">(TreeNode root, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">      dfs(root,target);</span><br><span class="line">      <span class="keyword">return</span> list_1;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dfs</span><span class="params">(TreeNode root,<span class="type">int</span> target)</span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(root==<span class="literal">null</span>)<span class="keyword">return</span>;</span><br><span class="line">       target-=root.val;</span><br><span class="line">      list_2.add(root.val);</span><br><span class="line">      <span class="keyword">if</span>(root.left==<span class="literal">null</span>&amp;&amp;root.right==<span class="literal">null</span>&amp;&amp;target==<span class="number">0</span>) &#123;</span><br><span class="line">        list_1.add(<span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;(list_2));<span class="comment">//不能提前return会导致队列二无法回溯导致结果不对</span></span><br><span class="line">      &#125;</span><br><span class="line">      dfs(root.left,target);</span><br><span class="line">      dfs(root.right,target);</span><br><span class="line">      <span class="comment">// target-=root.val;为什么不需要再加上root.val，因为Java是值传递,是将实参复制一份传给函数,在函数里修改并不影响实参,所以加不加都没影响</span></span><br><span class="line">      list_2.removeLast();</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</code></pre>
-<h2 id="剑指-Offer-29-顺时针打印矩阵"><a href="#剑指-Offer-29-顺时针打印矩阵" class="headerlink" title="剑指 Offer 29. 顺时针打印矩阵"></a>剑指 Offer 29. 顺时针打印矩阵</h2><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">   <span class="keyword">public</span> <span class="type">int</span>[] spiralOrder(<span class="type">int</span>[][] matrix) &#123;</span><br><span class="line">      <span class="keyword">if</span>(matrix.length==<span class="number">0</span>)<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">0</span>];</span><br><span class="line">      <span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">0</span>,r = matrix[<span class="number">0</span>].length-<span class="number">1</span>,b = matrix.length-<span class="number">1</span>,t = <span class="number">0</span> ,x =<span class="number">0</span>  ;</span><br><span class="line">       <span class="type">int</span> res[] = <span class="keyword">new</span> <span class="title class_">int</span>[(b+<span class="number">1</span>)*(r+<span class="number">1</span>)];</span><br><span class="line">       <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">           <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> l; i &lt;= r; i++) res[x++] = matrix[t][i]; <span class="comment">// 从左往右遍历</span></span><br><span class="line">           <span class="keyword">if</span>(++t &gt; b) <span class="keyword">break</span>;<span class="comment">//边界条件收缩,行数向下收缩t++,如果大于b,结束循环返回</span></span><br><span class="line">           <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> t; i &lt;= b; i++) res[x++] = matrix[i][r]; <span class="comment">// 从上往下遍历</span></span><br><span class="line">           <span class="keyword">if</span>(l &gt; --r) <span class="keyword">break</span>;<span class="comment">//边界条件收缩,列数向左搜索</span></span><br><span class="line">           <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> r; i &gt;= l; i--) res[x++] = matrix[b][i]; <span class="comment">// 从右往左</span></span><br><span class="line">           <span class="keyword">if</span>(t &gt; --b) <span class="keyword">break</span>;<span class="comment">//边界条件收缩,行数向上收缩</span></span><br><span class="line">           <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> b; i &gt;= t; i--) res[x++] = matrix[i][l]; <span class="comment">// 从下往上.</span></span><br><span class="line">           <span class="keyword">if</span>(++l &gt; r) <span class="keyword">break</span>;<span class="comment">//边界条件收缩,列数向右收缩</span></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> res;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-	
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
 
@@ -851,7 +855,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
