@@ -22,22 +22,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="KMP算法是用来解决字符串匹配问题的，解决字符串匹配问题主要有两种方法第一种: 使用暴力枚举法，穷举出所有的可能，进行判断，时间复杂度为Log(M*N)第二种：使用KMP算法，使得时间复杂度能够将为线性 以力扣原题力扣28题为例，该题就是一个典型的KMP算法使用例子  暴力枚举法(穷举出所有的可能进行判断，时间复杂度为Log(M*N)) &#96;&#96;Java class Solution">
+  <meta name="description" content="代码演示&#96;&#96;Java      import java.util.concurrent.*;  public class ThreadDemo &amp;#123;     public static void main(String[] args) throws InterruptedException, ExecutionException &amp;#123;         System.out.prin">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KMP算法">
-<meta property="og:url" content="http://example.com/2022/03/22/KMP%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="创建线程的几种方式及代码演示(1)">
+<meta property="og:url" content="http://example.com/2022/04/13/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84Demo%E6%BC%94%E7%A4%BAmd/index.html">
 <meta property="og:site_name" content="Whole">
-<meta property="og:description" content="KMP算法是用来解决字符串匹配问题的，解决字符串匹配问题主要有两种方法第一种: 使用暴力枚举法，穷举出所有的可能，进行判断，时间复杂度为Log(M*N)第二种：使用KMP算法，使得时间复杂度能够将为线性 以力扣原题力扣28题为例，该题就是一个典型的KMP算法使用例子  暴力枚举法(穷举出所有的可能进行判断，时间复杂度为Log(M*N)) &#96;&#96;Java class Solution">
+<meta property="og:description" content="代码演示&#96;&#96;Java      import java.util.concurrent.*;  public class ThreadDemo &amp;#123;     public static void main(String[] args) throws InterruptedException, ExecutionException &amp;#123;         System.out.prin">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://r95hnmq9s.hn-bkt.clouddn.com/2341.png">
-<meta property="article:published_time" content="2022-03-22T10:04:15.000Z">
-<meta property="article:modified_time" content="2022-04-08T01:32:55.955Z">
+<meta property="article:published_time" content="2022-04-13T02:37:00.000Z">
+<meta property="article:modified_time" content="2022-04-13T06:19:29.391Z">
 <meta property="article:author" content="小鲸鱼">
-<meta property="article:tag" content="KMP">
+<meta property="article:tag" content="Thread">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://r95hnmq9s.hn-bkt.clouddn.com/2341.png">
 
-<link rel="canonical" href="http://example.com/2022/03/22/KMP%E7%AE%97%E6%B3%95/">
+<link rel="canonical" href="http://example.com/2022/04/13/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84Demo%E6%BC%94%E7%A4%BAmd/">
 
 
 <script id="page-configurations">
@@ -50,7 +48,7 @@
   };
 </script>
 
-  <title>KMP算法 | Whole</title>
+  <title>创建线程的几种方式及代码演示(1) | Whole</title>
   
 
 
@@ -193,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/22/KMP%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/13/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84Demo%E6%BC%94%E7%A4%BAmd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/whole.png">
@@ -206,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          KMP算法
+          创建线程的几种方式及代码演示(1)
         </h1>
 
         <div class="post-meta">
@@ -215,23 +213,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-03-22 18:04:15" itemprop="dateCreated datePublished" datetime="2022-03-22T18:04:15+08:00">2022-03-22</time>
+              <time title="创建时间：2022-04-13 10:37:00 / 修改时间：14:19:29" itemprop="dateCreated datePublished" datetime="2022-04-13T10:37:00+08:00">2022-04-13</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-08 09:32:55" itemprop="dateModified" datetime="2022-04-08T09:32:55+08:00">2022-04-08</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                  <a href="/categories/JUC/" itemprop="url" rel="index"><span itemprop="name">JUC</span></a>
                 </span>
             </span>
 
@@ -241,14 +233,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.8k</span>
+              <span>5.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -260,115 +252,176 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="KMP算法是用来解决字符串匹配问题的，解决字符串匹配问题主要有两种方法"><a href="#KMP算法是用来解决字符串匹配问题的，解决字符串匹配问题主要有两种方法" class="headerlink" title="KMP算法是用来解决字符串匹配问题的，解决字符串匹配问题主要有两种方法"></a>KMP算法是用来解决字符串匹配问题的，解决字符串匹配问题主要有两种方法</h2><h3 id="第一种-使用暴力枚举法，穷举出所有的可能，进行判断，时间复杂度为Log-M-N"><a href="#第一种-使用暴力枚举法，穷举出所有的可能，进行判断，时间复杂度为Log-M-N" class="headerlink" title="第一种: 使用暴力枚举法，穷举出所有的可能，进行判断，时间复杂度为Log(M*N)"></a>第一种: 使用暴力枚举法，穷举出所有的可能，进行判断，时间复杂度为Log(M*N)</h3><h3 id="第二种：使用KMP算法，使得时间复杂度能够将为线性"><a href="#第二种：使用KMP算法，使得时间复杂度能够将为线性" class="headerlink" title="第二种：使用KMP算法，使得时间复杂度能够将为线性"></a>第二种：使用KMP算法，使得时间复杂度能够将为线性</h3><ul>
-<li>以力扣原题<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-strstr/">力扣28题</a>为例，该题就是一个典型的KMP算法使用例子</li>
-</ul>
-<h1 id="暴力枚举法-穷举出所有的可能进行判断，时间复杂度为Log-M-N"><a href="#暴力枚举法-穷举出所有的可能进行判断，时间复杂度为Log-M-N" class="headerlink" title="暴力枚举法(穷举出所有的可能进行判断，时间复杂度为Log(M*N))"></a>暴力枚举法(穷举出所有的可能进行判断，时间复杂度为Log(M*N))</h1><p> &#96;&#96;Java</p>
-<pre><code>class Solution &#123;
-public int strStr(String haystack, String needle) &#123;
-    int n = haystack.length(), m = needle.length();
-    for (int i = 0; i + m &lt;= n; i++) &#123;
-        boolean flag = true;
-        for (int j = 0; j &lt; m; j++) &#123;
-            if (haystack.charAt(i + j) != needle.charAt(j)) &#123;
-                flag = false;
-                break;
+        <h2 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示"></a>代码演示</h2><pre><code>``Java
+    
+import java.util.concurrent.*;
+
+public class ThreadDemo &#123;
+    public static void main(String[] args) throws InterruptedException, ExecutionException &#123;
+        System.out.println(&quot;-------------------------继承Thread类来创建线程 --------------------------------&quot;);
+        PrintAB pb = new PrintAB(1);
+        new Thread(()-&gt;&#123;
+            pb.printA();
+        &#125;,&quot;A&quot;).start();
+        new Thread(()-&gt;&#123;
+            pb.printB();
+        &#125;,&quot;A&quot;).start();
+        Thread.sleep(500);
+        System.out.println(&quot;-------------------------使用Runnable创建线程--------------------------------&quot;);
+        //直接使用Runnable接口实现类来创建线程
+        RunnableDemo rd = new RunnableDemo();
+        new Thread(rd,&quot;rd_A&quot;).start();
+        new Thread(rd,&quot;rd_B&quot;).start();
+        //配合线程池来使用(为了方便直接使用Executors来创建线程池，但是不建议使用因为等待队列是无界队列使用不当容易造成内存溢出)
+        Thread.sleep(500);
+        System.out.println(&quot;-------------------------Runnable配合线程池使用(execute)--------------------------------&quot;);
+        ExecutorService es = Executors.newFixedThreadPool(2);
+        es.execute(rd);
+        //配合线程池使用submit方法
+        //execute只能提交Runnable类型的任务，无返回值。submit既可以提交Runnable类型的任务，也可以提交Callable类型的任务，会有一个类型为Future的返回值，但当任务类型为Runnable时，返回值为null。
+        Thread.sleep(500);
+        System.out.println(&quot;-------------------------Runnable配合线程池使用(submit)--------------------------------&quot;);
+        Future&lt;?&gt; submit = es.submit(rd);
+        System.out.println(&quot;Runnable的返回值为 :&quot;+submit.get());
+        System.out.println(&quot;-------------------------Callable配合线程池使用--------------------------------&quot;);
+        //为了方便直接使用内部类来声明Callable的实现类
+        Thread.sleep(500);
+        Future&lt;String&gt; submit1 = es.submit(new Callable&lt;String&gt;() &#123;
+            @Override
+            public String call() throws Exception &#123;
+                for (int i = 0; i &lt; 7; i++) &#123;
+                    System.out.println(Thread.currentThread().getName() + &quot;正在打印 :&quot; + (i + 1));
+                &#125;
+                return &quot;Callable打印完成&quot;;
+            &#125;
+        &#125;);
+        System.out.println(&quot;Callable的返回值为 :&quot;+submit1.get());
+    &#125;
+    &#125;
+    class PrintAB extends Thread&#123;
+    int ctl;
+    public PrintAB(int ctl)&#123;
+        this.ctl = ctl;
+    &#125;
+
+    public void printA()&#123;
+        for(int i=1;i&lt;=7;i++)&#123;
+            synchronized (this)&#123;
+                while(ctl!=1)&#123;
+                    try &#123;
+                        wait();
+                    &#125; catch (InterruptedException e) &#123;
+                        e.printStackTrace();
+                    &#125;
+                &#125;
+                System.out.println(&quot;线程A正在打印数字 ：&quot;+i);
+                ctl = 2;
+                notifyAll();
             &#125;
         &#125;
-        if (flag) &#123;
-            return i;
-        &#125;
     &#125;
-    return -1;
- &#125;
-&#125;
 
-``
-</code></pre>
-<h2 id="KMP算法解决字符串匹配问题"><a href="#KMP算法解决字符串匹配问题" class="headerlink" title="KMP算法解决字符串匹配问题"></a>KMP算法解决字符串匹配问题</h2><p>###要理解KMP算法，必须要知道几个概念</p>
-<ul>
-<li><p>KMP如何做到线性的时间复杂度，使用KMP算法当出现字符串不匹配时，我们可以知道一部分之前已经匹配的文本内容，从而避免了从头匹配的过程</p>
-</li>
-<li><p>要做到知道之前已经匹配的文本内容，我们必须知道几个概念</p>
-<ul>
-<li>字符串前缀: 不包含最后一个字符的所有以第一个字符开头的连续子串。(例如aabaaf中连续子串有a,aa,aab,aaba,aabaa) </li>
-<li>字符串后缀: 不包含第一个字符的所有以最后一个字符结尾的连续子串。(例如aabaaf中连续子串有f,af,aaf,baaf,abaaf)</li>
-</ul>
-</li>
-<li><p>前缀表也即是next数组，next数组的含义为当模式串与主串(文本串)不匹配的时候，模式串应该从哪里开始重新匹配。</p>
-<ul>
-<li>例如文本串aabaabaafa与模式串aabaaf，显然在第一次匹配的时候在文本串aabaab中b字符与模式串aabaaf中f字符不相等，如果是暴力枚举法的话需要将文本串指针指向，向后移动一位继续匹配，在使用了KMP算法后我们可以使用前缀表来得出模式串应该从哪里开始重新匹配，为什么从前缀表就可以得出模式串应该从哪里开始重新匹配呢？<ul>
-<li>前缀表其实记录的就是最长相等前后缀的长度，例如aabaa中最长相等前后缀的长度为2(也即是aa)，还是上面文本串和模式串的例子，在第一次不匹配的时候我们可以查看模式串不匹配字符前的最长相等前后缀(aa),那么我们就可以变相的将该串的前缀子串移动到已匹配的后缀子串的位置(只是模式串匹配指针的移动，从而可以看成变相的导致前缀子串的移动)，从而避免了暴力枚举中重复匹配的过程(在当前例子中也即是从b字符继续匹配)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>前缀表的求解也即是next数组的求解</p>
-</li>
-</ul>
-<p> &#96;&#96;Java</p>
-<pre><code>public void getNext(int[] next,String tar)&#123;
-    int j = 0;
-    next[0] = 0;
-    for(int i=1;i&lt;tar.length();i++)&#123;
-        while(j&gt;0&amp;&amp;tar.charAt(i)!=tar.charAt(j))&#123;
-             j = next[j-1];
+    public void printB()&#123;
+        for(int i=1;i&lt;=7;i++)&#123;
+            synchronized (this)&#123;
+                while(ctl!=2)&#123;
+                    try &#123;
+                        wait();
+                    &#125; catch (InterruptedException e) &#123;
+                        e.printStackTrace();
+                    &#125;
+                &#125;
+                System.out.println(&quot;线程B正在打印数字 ：&quot;+i);
+                ctl = 1;
+                notifyAll();
+            &#125;
+
         &#125;
-        if(tar.charAt(i)==tar.charAt(j))&#123;
-            j++;
-        &#125;
-        next[i] = j;
     &#125;
-&#125;
+    &#125;
+    class RunnableDemo implements Runnable&#123;
+    @Override
+    public void run() &#123;
+        for(int i=0;i&lt;7;i++)&#123;
+            System.out.println(Thread.currentThread().getName()+&quot;正在打印 :&quot;+(i+1));
+        &#125;
+    &#125;
+    &#125;
+    es.shutdownNow();
+
+---
 </code></pre>
 <p>&#96;&#96;</p>
-<ol>
-<li>next数组的求解可以分为三步 第一步next数组初始化</li>
-<li>第二步 处理前后缀不同的情况</li>
-<li>第三步 处理前后缀相同的情况</li>
-</ol>
-<p> &#96;&#96;Java</p>
-<pre><code>class Solution &#123;
-public int strStr(String haystack, String needle) &#123;
-     if (needle.length() == 0) &#123;//边界判断
-        return 0;
-    &#125;
-     int []next = new int[needle.length()];//前缀表也可以说是next数组
-     getNext(next,needle);
-     int j = 0;
-     for(int i=0;i&lt;haystack.length();i++)&#123;
-        while(j&gt;0&amp;&amp;(haystack.charAt(i)!=needle.charAt(j)))&#123;
-            j = next[j-1];
-        &#125;
-        if(haystack.charAt(i)==needle.charAt(j))&#123;
-            j++;
-        &#125;
-        if(j==needle.length())&#123;
-           return i-needle.length()+1;
-        &#125;
-     &#125;
-     return -1;
-&#125;
-public void getNext(int[] next,String tar)&#123;
-    int j = 0;
-    next[0] = 0;
-    for(int i=1;i&lt;tar.length();i++)&#123;
-        while(j&gt;0&amp;&amp;tar.charAt(i)!=tar.charAt(j))&#123;
-             j = next[j-1];
-        &#125;
-        if(tar.charAt(i)==tar.charAt(j))&#123;
-            j++;
-        &#125;
-        next[i] = j;
-    &#125;
-&#125;
+<ul>
+<li>Runnable和Callable的区别  <ul>
+<li>Runnable没有返回值，Callable有返回值</li>
+<li>Runnable没法抛出异常(public abstract void run()),Callable能抛出异常(V call() throws Exception;)</li>
+<li>Runnable接口的实现类能直接配合Thread类使用，而Callable不能</li>
+</ul>
+</li>
+</ul>
+<h2 id="结果演示"><a href="#结果演示" class="headerlink" title="结果演示"></a>结果演示</h2><pre><code>``Java
+    -------------------------继承Thread类来创建线程 --------------------------------
+线程A正在打印数字 ：1
+线程B正在打印数字 ：1
+线程A正在打印数字 ：2
+线程B正在打印数字 ：2
+线程A正在打印数字 ：3
+线程B正在打印数字 ：3
+线程A正在打印数字 ：4
+线程B正在打印数字 ：4
+线程A正在打印数字 ：5
+线程B正在打印数字 ：5
+线程A正在打印数字 ：6
+线程B正在打印数字 ：6
+线程A正在打印数字 ：7
+线程B正在打印数字 ：7
+-------------------------使用Runnable创建线程--------------------------------
+rd_A正在打印 :1
+rd_A正在打印 :2
+rd_A正在打印 :3
+rd_B正在打印 :1
+rd_B正在打印 :2
+rd_B正在打印 :3
+rd_B正在打印 :4
+rd_B正在打印 :5
+rd_B正在打印 :6
+rd_B正在打印 :7
+rd_A正在打印 :4
+rd_A正在打印 :5
+rd_A正在打印 :6
+rd_A正在打印 :7
+-------------------------Runnable配合线程池使用(execute)--------------------------------
+pool-1-thread-1正在打印 :1
+pool-1-thread-1正在打印 :2
+pool-1-thread-1正在打印 :3
+pool-1-thread-1正在打印 :4
+pool-1-thread-1正在打印 :5
+pool-1-thread-1正在打印 :6
+pool-1-thread-1正在打印 :7
+-------------------------Runnable配合线程池使用(submit)--------------------------------
+pool-1-thread-2正在打印 :1
+pool-1-thread-2正在打印 :2
+pool-1-thread-2正在打印 :3
+pool-1-thread-2正在打印 :4
+pool-1-thread-2正在打印 :5
+pool-1-thread-2正在打印 :6
+pool-1-thread-2正在打印 :7
+Runnable的返回值为 :null
+-------------------------Callable配合线程池使用(submit)--------------------------------
+pool-1-thread-1正在打印 :1
+pool-1-thread-1正在打印 :2
+pool-1-thread-1正在打印 :3
+pool-1-thread-1正在打印 :4
+pool-1-thread-1正在打印 :5
+pool-1-thread-1正在打印 :6
+pool-1-thread-1正在打印 :7
+Callable的返回值为 :Callable打印完成
 
-&#125;
+Process finished with exit code 0
 </code></pre>
 <p>&#96;&#96;</p>
-<h3 id="最后附上几张图帮助理解以下图均来自代码随想录"><a href="#最后附上几张图帮助理解以下图均来自代码随想录" class="headerlink" title="最后附上几张图帮助理解以下图均来自代码随想录"></a>最后附上几张图帮助理解<a target="_blank" rel="noopener" href="https://www.programmercarl.com/">以下图均来自代码随想录</a></h3><img src="http://r95hnmq9s.hn-bkt.clouddn.com/2341.png">
-<iframe height="500" width="500" src="http://r95hnmq9s.hn-bkt.clouddn.com/2342.gif">
-</iframe>
+
     </div>
 
     
@@ -385,7 +438,7 @@ public void getNext(int[] next,String tar)&#123;
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2022/03/22/KMP%E7%AE%97%E6%B3%95/" title="KMP算法">http://example.com/2022/03/22/KMP算法/</a>
+    <a href="http://example.com/2022/04/13/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84Demo%E6%BC%94%E7%A4%BAmd/" title="创建线程的几种方式及代码演示(1)">http://example.com/2022/04/13/创建线程池的Demo演示md/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -396,7 +449,7 @@ public void getNext(int[] next,String tar)&#123;
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/KMP/" rel="tag"># KMP</a>
+              <a href="/tags/Thread/" rel="tag"># Thread</a>
           </div>
 
         
@@ -404,10 +457,13 @@ public void getNext(int[] next,String tar)&#123;
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2022/03/22/AQS%E6%BA%90%E7%A0%81-%E9%87%8D%E8%A6%81%E7%9A%84%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95/" rel="next" title="AQS源码-重要的成员方法(2)">
-      AQS源码-重要的成员方法(2) <i class="fa fa-chevron-right"></i>
+    <a href="/2022/03/28/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%BA%90%E7%A0%81%E8%AF%A6%E8%A7%A3(ThreadPoolExecutor)(2)/" rel="prev" title="线程池源码详解(ThreadPoolExecutor)(2)">
+      <i class="fa fa-chevron-left"></i> 线程池源码详解(ThreadPoolExecutor)(2)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/13/FutureTask%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3(2)/" rel="next" title="Future体系结构及FutureTask源码理解(2)">
+      Future体系结构及FutureTask源码理解(2) <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -472,7 +528,7 @@ public void getNext(int[] next,String tar)&#123;
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#KMP%E7%AE%97%E6%B3%95%E6%98%AF%E7%94%A8%E6%9D%A5%E8%A7%A3%E5%86%B3%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98%E7%9A%84%EF%BC%8C%E8%A7%A3%E5%86%B3%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98%E4%B8%BB%E8%A6%81%E6%9C%89%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">KMP算法是用来解决字符串匹配问题的，解决字符串匹配问题主要有两种方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D-%E4%BD%BF%E7%94%A8%E6%9A%B4%E5%8A%9B%E6%9E%9A%E4%B8%BE%E6%B3%95%EF%BC%8C%E7%A9%B7%E4%B8%BE%E5%87%BA%E6%89%80%E6%9C%89%E7%9A%84%E5%8F%AF%E8%83%BD%EF%BC%8C%E8%BF%9B%E8%A1%8C%E5%88%A4%E6%96%AD%EF%BC%8C%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BALog-M-N"><span class="nav-number">1.1.</span> <span class="nav-text">第一种: 使用暴力枚举法，穷举出所有的可能，进行判断，时间复杂度为Log(M*N)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%EF%BC%9A%E4%BD%BF%E7%94%A8KMP%E7%AE%97%E6%B3%95%EF%BC%8C%E4%BD%BF%E5%BE%97%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E8%83%BD%E5%A4%9F%E5%B0%86%E4%B8%BA%E7%BA%BF%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">第二种：使用KMP算法，使得时间复杂度能够将为线性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E6%9E%9A%E4%B8%BE%E6%B3%95-%E7%A9%B7%E4%B8%BE%E5%87%BA%E6%89%80%E6%9C%89%E7%9A%84%E5%8F%AF%E8%83%BD%E8%BF%9B%E8%A1%8C%E5%88%A4%E6%96%AD%EF%BC%8C%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BALog-M-N"><span class="nav-number"></span> <span class="nav-text">暴力枚举法(穷举出所有的可能进行判断，时间复杂度为Log(M*N))</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#KMP%E7%AE%97%E6%B3%95%E8%A7%A3%E5%86%B3%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">KMP算法解决字符串匹配问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E9%99%84%E4%B8%8A%E5%87%A0%E5%BC%A0%E5%9B%BE%E5%B8%AE%E5%8A%A9%E7%90%86%E8%A7%A3%E4%BB%A5%E4%B8%8B%E5%9B%BE%E5%9D%87%E6%9D%A5%E8%87%AA%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">最后附上几张图帮助理解以下图均来自代码随想录</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%BC%94%E7%A4%BA"><span class="nav-number">1.</span> <span class="nav-text">代码演示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E6%BC%94%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">结果演示</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
